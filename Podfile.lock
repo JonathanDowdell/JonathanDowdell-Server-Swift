@@ -1,0 +1,29 @@
+PODS:
+  - SwiftKeychainWrapper (4.0.1)
+  - SwiftSH (0.1.2):
+    - SwiftSH/Libssh2 (= 0.1.2)
+  - SwiftSH/Core (0.1.2)
+  - SwiftSH/Libssh2 (0.1.2):
+    - SwiftSH/Core
+  - SwiftyRSA (1.6.0):
+    - SwiftyRSA/ObjC (= 1.6.0)
+
+DEPENDENCIES:
+  - SwiftKeychainWrapper
+  - SwiftSH
+  - SwiftyRSA
+
+SPEC REPOS:
+  trunk:
+    - SwiftKeychainWrapper
+    - SwiftSH
+    - SwiftyRSA
+
+SPEC CHECKSUMS:
+  SwiftKeychainWrapper: 807ba1d63c33a7d0613288512399cd1eda1e470c
+  SwiftSH: 5d3c95b23093106d18c527ce9c175a5733e3e86e
+  SwiftyRSA: 3b9c9179744217951facc6a3e9ae8d8c97061ffa
+
+PODFILE CHECKSUM: 59291c4c94a5cc9822dce74ef1b8f402c209e0a4
+
+COCOAPODS: 1.10.0
