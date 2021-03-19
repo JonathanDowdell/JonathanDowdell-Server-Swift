@@ -20,6 +20,8 @@ enum TerminalCommand: Hashable {
     case freeMemoryTotal(LoadOn)
     case usedMemoryTotal(LoadOn)
     case cachedMemoryTotal(LoadOn)
+    case osName(LoadOn)
+    case osVersion(LoadOn)
     
     var value: String {
         switch self {
@@ -92,7 +94,7 @@ enum TerminalCommand: Hashable {
             case .device, .server:
                 return "nproc"
             }
-        
+            
         case .usedMemoryTotal(let loadOn):
             switch loadOn {
             case .server:
@@ -108,8 +110,22 @@ enum TerminalCommand: Hashable {
             case .device:
                 return "top -bn1 | grep 'MiB Mem'"
             }
+        case .osName(let loadOn):
+            switch loadOn {
+            case .device:
+                return "egrep '^(NAME)=' /etc/os-release | xargs" // Device
+            case .server:
+                return "egrep '^(NAME)=' /etc/os-release | xargs | awk '{print substr($0, 6, 40);}'" // Server
+            }
+        case .osVersion(let loadOn):
+            switch loadOn {
+            case .device:
+                return "egrep '^(VERSION)=' /etc/os-release | xargs" // Device
+            case .server:
+                return "egrep '^(VERSION)=' /etc/os-release | xargs | awk '{print substr($0, 9, 40);}'" // Server
+            }
         }
-        
+        // egrep '^(VERSION)=' /etc/os-release | grep -oP '^(VERSION)="\K[^"]+'
         
     }
     
@@ -139,6 +155,12 @@ enum TerminalCommand: Hashable {
             return .freeMemoryTotal(loadOn)
         case "usedMemoryTotal":
             return .usedMemoryTotal(loadOn)
+        case "cachedMemoryTotal":
+            return .cachedMemoryTotal(loadOn)
+        case "osName":
+            return .osName(loadOn)
+        case "osVersion":
+            return .osVersion(loadOn)
         default:
             return .coreCount(loadOn)
         }

@@ -77,7 +77,7 @@ private struct ServerRowHeader: View {
     var body: some View {
         HStack(spacing: 15) {
             NavigationLink(
-                destination: StatusServerDetailView(),
+                destination: StatusServerDetailView(observableServerRowStatus: observableStatusServerRow),
                 label: {
                     Text(observableStatusServerRow.server.name)
                         .foregroundColor(.white)
@@ -87,9 +87,6 @@ private struct ServerRowHeader: View {
                 })
             
             Spacer()
-            
-//            PulsatingView(viewModel: PulsatingViewModel())
-//                .offset(x: 10.0)
             
             Text(calculateTemp())
                 .font(.custom("RobotoMono-Regular", fixedSize: 13))

@@ -19,6 +19,7 @@ class ObservableServers: ObservableObject {
     
     init() {
         let keys = KeychainWrapper.standard.allKeys()
+        defaults.set(TemperatureScale.celsius.rawValue, forKey: "TemperatureScale")
         keys.forEach { (key) in
             if let rawServerData = KeychainWrapper.standard.data(forKey: key) {
                 if let serverData = try? decoder.decode(Server.self, from: rawServerData) {

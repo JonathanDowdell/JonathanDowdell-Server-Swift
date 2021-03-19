@@ -34,9 +34,15 @@ class ObservableServerRowStatus: ObservableObject {
     
     @Published var cachedMemoryTotal: CGFloat?
     
+    @Published var osName: String?
+    
+    @Published var osVersion: String?
+    
     @Published var serverLoaded = false
     
     @Published var server: Server
+    
+    @Published var serverStatistic: ServerStatistic?
     
     private let defaults = UserDefaults.standard
     
@@ -82,23 +88,34 @@ class ObservableServerRowStatus: ObservableObject {
         
         command.connect()
             .authenticate(self.authenticationChallenge)
-            .execute(generateRunnable(server.loadOn)) { [weak self] (resultedCommand, data: String?, error) in
+            .execute(terminalCommands()) { [weak self] (resultedCommand, data: String?, error) in
                 guard error == nil else {
                     print("Error ==> \(String(describing: error))")
                     return
                 }
                 
-                guard let dataArray = data?.components(separatedBy: "\n"),
-                      let loadOn = self?.server.loadOn,
-                      let dataDict = self?.aggregateDataToDict(dataArray, loadOn: loadOn)
-                      else { return }
+                print(data ?? "")
+                guard let data = data else { return }
                 
-                withAnimation(.spring()) { self?.serverLoaded = true }
+                self?.aggregateData(data)
                 
-                DispatchQueue.main.async {
-                    self?.aggregateDataForUse(dataDict, loadedOn: loadOn)
-                }
+                
+//                guard let dataArray = data?.components(separatedBy: "\n"),
+//                      let loadOn = self?.server.loadOn,
+//                      let dataDict = self?.aggregateDataToDict(dataArray, loadOn: loadOn)
+//                else { return }
+//
+//                withAnimation(.spring()) { self?.serverLoaded = true }
+//
+//                DispatchQueue.main.async {
+//                    self?.aggregateDataForUse(dataDict, loadedOn: loadOn)
+//                }
             }
+    }
+    
+    private func aggregateData(_ data: String) {
+        let serverStatistics = ServerStatistic(data: data)
+        print(serverStatistics)
     }
     
     private func generateRunnable(_ loadOn: TerminalCommand.LoadOn) -> String {
@@ -113,7 +130,9 @@ class ObservableServerRowStatus: ObservableObject {
         \(TerminalCommand.memoryTotal(loadOn).value) &&
         \(TerminalCommand.freeMemoryTotal(loadOn).value) &&
         \(TerminalCommand.usedMemoryTotal(loadOn).value) &&
-        \(TerminalCommand.cachedMemoryTotal(loadOn).value)
+        \(TerminalCommand.cachedMemoryTotal(loadOn).value) &&
+        \(TerminalCommand.osName(loadOn).value) &&
+        \(TerminalCommand.osVersion(loadOn).value)
         """
     }
     
@@ -132,9 +151,60 @@ class ObservableServerRowStatus: ObservableObject {
         return CGFloat(data)
     }
     
+    private func filterData(_ data: String, from start: String, to end: String) -> String {
+        guard let startIndex = data.range(of: start) else { return "" }
+        guard let endIndex = data.range(of: end) else { return "" }
+        let rawData = data[startIndex.upperBound..<endIndex.lowerBound].trimmingCharacters(in: .whitespaces).trimmingCharacters(in: .letters)
+        return rawData
+    }
+    
     private func dataToNumber(_ data: String) -> Double {
         guard let number = Double(data) else { return 0.0001 }
         return number
+    }
+    
+    private func terminalCommands() -> String {
+        // CPU Temperature Command // data[0]
+        guard let temperatureScaleRawValue = defaults.string(forKey: "TemperatureScale"),
+              let temperatureScale = TemperatureScale(rawValue: temperatureScaleRawValue) else { return "" }
+        let cpuTempCommand = "cat /sys/class/thermal/thermal_zone*/temp | awk '{print \(temperatureScale.rawValue)}'"
+        
+        // CPU & Memory Usage // data[1...4]
+        let cpuMemory = "top -b -n2 -d 3 | head -n 4"
+        
+        // CPU Core Count // data[5]
+        let cpuCoreCountCommand = "nproc"
+        
+        // OS Infomation // data[6]
+        let osInfoCommand = "egrep '^(NAME)=|^(VERSION)=' /etc/os-release"
+        
+        
+        
+//        let cpuTempCommand = "cat /sys/class/thermal/thermal_zone*/temp | awk '{print \(temperatureScale.rawValue)}'"
+//
+//        // CPU Usage Command // data[1-2]
+//        let cpuUsageCommand = "cat /proc/stat | awk '/^cpu /{print $2, $3, $4, $5, $6, $7, $8, $9, $10, $11}'"
+//
+//        // CPU Load Command // data[3]
+//        let cpuLoadCommand = "cat /proc/loadavg | awk '{print $1, $2, $3}'"
+//
+//        // CPU Core Count // data[4]
+//        let cpuCoreCountCommand = "nproc"
+//
+//        // Memory Usage Command // data[5-6]
+//        let memoryUsageCommand = "free -m | grep -E 'Mem:|Swap:'"
+//
+//        // Uptime Command
+//        let uptimeCommand = "uptime | awk '{print $3, $4}' | sed 's/,//g'"
+        
+        
+        
+        return """
+            \(cpuTempCommand) &&
+            \(cpuMemory) &&
+            \(cpuCoreCountCommand) &&
+            \(osInfoCommand)
+            """
     }
     
     private func aggregateDataForUse(_ dataDict:[TerminalCommand:String], loadedOn: TerminalCommand.LoadOn) {
@@ -242,6 +312,24 @@ class ObservableServerRowStatus: ObservableObject {
                 case .device:
                     self.cachedMemoryTotal = self.filterData(rawData, from: "ed,", to: "buff/cache")
                 }
+            case .osName(_):
+                switch loadedOn {
+                case .server:
+                    self.osName = String(rawData)
+                case .device:
+                    guard let startIndex = rawData.range(of: "NAME=")?.upperBound else { return }
+                    let rawData = rawData[startIndex...]
+                    self.osName = String(rawData)
+                }
+            case .osVersion(_):
+                switch loadedOn {
+                case .server:
+                    self.osVersion = String(rawData)
+                case .device:
+                    guard let startIndex = rawData.range(of: "VERSION=")?.upperBound else { return }
+                    let rawData = rawData[startIndex...]
+                    self.osVersion = String(rawData)
+                }
             }
         }
     }
@@ -249,17 +337,22 @@ class ObservableServerRowStatus: ObservableObject {
     // TODO : Make Dynamic
     private func aggregateDataToDict(_ data: [String], loadOn: TerminalCommand.LoadOn) -> [TerminalCommand:String] {
         var dict = [TerminalCommand:String]()
-        dict[.cpuTemp(loadOn)] = data[0]
-        dict[.coreCount(loadOn)] = data[1]
-        dict[.cpuUsage(loadOn)] = data[2]
-        dict[.userUsage(loadOn)] = data[3]
-        dict[.systemUsage(loadOn)] = data[4]
-        dict[.userNiceUsage(loadOn)] = data[5]
-        dict[.ioWaitUsage(loadOn)] = data[6]
-        dict[.memoryTotal(loadOn)] = data[7]
-        dict[.freeMemoryTotal(loadOn)] = data[8]
-        dict[.usedMemoryTotal(loadOn)] = data[9]
-        dict[.cachedMemoryTotal(loadOn)] = data[10]
+        if data.count >= 11 {
+            dict[.cpuTemp(loadOn)] = data[0]
+            dict[.coreCount(loadOn)] = data[1]
+            dict[.cpuUsage(loadOn)] = data[2]
+            dict[.userUsage(loadOn)] = data[3]
+            dict[.systemUsage(loadOn)] = data[4]
+            dict[.userNiceUsage(loadOn)] = data[5]
+            dict[.ioWaitUsage(loadOn)] = data[6]
+            dict[.memoryTotal(loadOn)] = data[7]
+            dict[.freeMemoryTotal(loadOn)] = data[8]
+            dict[.usedMemoryTotal(loadOn)] = data[9]
+            dict[.cachedMemoryTotal(loadOn)] = data[10]
+            dict[.osName(loadOn)] = data[11]
+            dict[.osVersion(loadOn)] = data[12]
+        }
+        
         return dict
     }
 }

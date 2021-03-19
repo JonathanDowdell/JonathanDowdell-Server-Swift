@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct StatusServerDetailView: View {
+    
+    @ObservedObject private(set) var observableServerRowStatus: ObservableServerRowStatus
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            LazyVStack {
+                
+            }
+        }.navigationTitle(observableServerRowStatus.osVersion ?? "")
     }
 }
 
 struct StatusServerDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        StatusServerDetailView()
+        StatusServerDetailView(observableServerRowStatus: ObservableServerRowStatus(with: MockData.servers[0]))
     }
 }
