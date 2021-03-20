@@ -18,7 +18,7 @@ struct ServerStatistic {
     var idleUsage: CGFloat?
     var ioWaitUsage: CGFloat?
     var stealUsage: CGFloat?
-    var cpuLoad: [Double] = [Double]()
+    var cpuLoad: [Double?] = [Double?]()
     var coreCount: Int16?
     var memoryTotal: CGFloat?
     var freeMemoryTotal: CGFloat?
@@ -26,70 +26,91 @@ struct ServerStatistic {
     var cachedMemoryTotal: CGFloat?
     var osName: String?
     var osVersion: String?
-    var loads: [Double?] = [Double?]()
-    
 }
 
 extension ServerStatistic {
     init?(data: String) {
         let dataComponents = data.components(separatedBy: "\n")
-        let cpuUsageComponents = dataComponents[3].components(separatedBy: " ")
-        let cpuLoadComponents = dataComponents[1].components(separatedBy: " ")
-        let memoryComponents = dataComponents[4].components(separatedBy: " ")
-        let osInfoComponents = dataComponents[6...7]
         
-        
-        // Uptime // [1]
-        self.uptime = Int(cpuLoadComponents[4])
-        
-        // CPU Temp // [0]
-        self.cpuTemp = CGFloat(dataComponents[0].trimmingCharacters(in: .whitespacesAndNewlines))
-        
-        // CPU Loads
-        self.loads = (search(for: "average", in: cpuLoadComponents) as [String])
-            .map({$0.doubleValue})
-        
-        // User Usage // [3]
-        self.userUsage = CGFloat(search(for: "us", in: cpuUsageComponents))
-        
-        // System Usage
-        self.systemUsage = CGFloat(search(for: "sy", in: cpuUsageComponents))
-        
-        // User Nice Usage
-        self.userNiceUsage = CGFloat(search(for: "ni", in: cpuUsageComponents))
-        
-        // Idle Usage
-        self.idleUsage = CGFloat(search(for: "id", in: cpuUsageComponents))
-        
-        // CPU Usage
-        self.cpuUsage = 100 - (self.idleUsage ?? 0)
-        
-        // ioWait Usage
-        self.ioWaitUsage = CGFloat(search(for: "wa", in: cpuUsageComponents))
-        
-        // Steal Usage
-        self.stealUsage =  CGFloat(search(for: "st", in: cpuUsageComponents))
-        
-        // Core Count
-        self.coreCount = Int16(dataComponents[5])
-        
-        // Memory Total
-        self.memoryTotal = CGFloat(search(for: "total", in: memoryComponents))
-        
-        // Free Memory Total
-        self.freeMemoryTotal = CGFloat(search(for: "free", in: memoryComponents))
-        
-        // Used Memory Total
-        self.usedMemoryTotal = CGFloat(search(for: "used", in: memoryComponents))
-        
-        // Cached Memory Total
-        self.cachedMemoryTotal = CGFloat(search(for: "buffcache", in: memoryComponents))
-        
-        // OS Name
-        self.osName = osInfoComponents.first?.components(separatedBy: "\"").dropFirst().first
-        
-        // OS Version
-        self.osVersion = osInfoComponents.last?.components(separatedBy: "\"").dropFirst().first
+        for item in dataComponents {
+            // CPU Load Component
+            if item.contains("top - ") {
+                let cpuLoadComponents = item.replacingOccurrences(of: ",", with: " ").components(separatedBy: " ")
+                
+                // CPU Load
+                self.cpuLoad = (search(for: "average", in: cpuLoadComponents) as [String])
+                    .map({$0.doubleValue})
+                
+                // CPU Uptime
+                self.uptime = Int(cpuLoadComponents[4])
+            }
+            
+            // CPU Usage
+            if item.contains("%Cpu(s):") {
+                let cpuUsageComponents = item.replacingOccurrences(of: ",", with: " ").components(separatedBy: " ")
+                
+                // User Usage
+                self.userUsage = CGFloat(search(for: "us", in: cpuUsageComponents))
+                
+                // System Usage
+                self.systemUsage = CGFloat(search(for: "sy", in: cpuUsageComponents))
+                
+                // User Nice Usage
+                self.userNiceUsage = CGFloat(search(for: "ni", in: cpuUsageComponents))
+                
+                // Idle Usage
+                self.idleUsage = CGFloat(search(for: "id", in: cpuUsageComponents))
+                
+                // CPU Usage
+                self.cpuUsage = 100 - (self.idleUsage ?? 0)
+                
+                // ioWait Usage
+                self.ioWaitUsage = CGFloat(search(for: "wa", in: cpuUsageComponents))
+                
+                // Steal Usage
+                self.stealUsage =  CGFloat(search(for: "st", in: cpuUsageComponents))
+            }
+            
+            
+            // Memory Usage
+            if item.contains("MiB Mem :") {
+                let memoryComponents = item.replacingOccurrences(of: ",", with: " ").components(separatedBy: " ")
+                // Memory Total
+                self.memoryTotal = CGFloat(search(for: "total", in: memoryComponents))
+                
+                // Free Memory Total
+                self.freeMemoryTotal = CGFloat(search(for: "free", in: memoryComponents))
+                
+                // Used Memory Total
+                self.usedMemoryTotal = CGFloat(search(for: "used", in: memoryComponents))
+                
+                // Cached Memory Total
+                self.cachedMemoryTotal = CGFloat(search(for: "buffcache", in: memoryComponents))
+            }
+            
+            // OS Info
+            if item.contains("NAME=") {
+                let osInfoComponents = item.replacingOccurrences(of: ",", with: " ").components(separatedBy: " ")
+                
+                // OS Name
+                self.osName = osInfoComponents.first?.components(separatedBy: "\"").dropFirst().first
+                
+                // OS Version
+                self.osVersion = osInfoComponents.last?.components(separatedBy: "\"").dropFirst().first
+            }
+            
+            // Core Count
+            if item.contains("Core") {
+                let rawCore = item.trimmingCharacters(in: .letters)
+                self.coreCount = Int16(rawCore)
+            }
+            
+            // CPU Temp
+            if item.contains("Temp") {
+                let rawTemp = item.trimmingCharacters(in: .letters).trimmingCharacters(in: .whitespaces)
+                self.cpuTemp = CGFloat(rawTemp)
+            }
+        }
         
     }
     

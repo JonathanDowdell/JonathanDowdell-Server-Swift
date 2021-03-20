@@ -16,7 +16,7 @@ struct StatusServerDetailView: View {
             LazyVStack {
                 
             }
-        }.navigationTitle(observableServerRowStatus.osVersion ?? "")
+        }.navigationTitle(observableServerRowStatus.serverStatistic.osVersion ?? "")
     }
 }
 

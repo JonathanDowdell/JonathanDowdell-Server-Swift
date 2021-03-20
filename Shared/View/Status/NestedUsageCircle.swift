@@ -7,11 +7,9 @@
 
 import SwiftUI
 
-struct NestedCircleStat: View {
+struct NestedUsageCircle: View {
     
     var progressValue: CGFloat?
-    
-    let timer = Timer.publish(every: 2, on: .main, in: .common).autoconnect()
     
     var body: some View {
         
@@ -54,7 +52,7 @@ struct NestedCircleStat: View {
 
 struct NestedCircles_Previews: PreviewProvider {
     static var previews: some View {
-        NestedCircleStat(progressValue: 0.005)
+        NestedUsageCircle(progressValue: 0.005)
             .preferredColorScheme(.dark)
             .frame(width: 50, height: 50, alignment: .center)
     }

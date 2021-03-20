@@ -21,14 +21,14 @@ struct StatusServerRow: View {
             
             HStack(alignment: .center) {
                 
-                StatSection(progressValue: observableServerRowStatus.cpuUsage,
+                StatSection(progressValue: observableServerRowStatus.serverStatistic.cpuUsage,
                             frameSize: frameSize, name: "CPU", altName: "Load")
                     .padding(.leading, 4)
                 
                 Spacer()
                 
-                StatSection(progressValue: calculateMemory(x: observableServerRowStatus.usedMemoryTotal),
-                            altProgressValue: calculateMemory(x: observableServerRowStatus.cachedMemoryTotal),
+                StatSection(progressValue: calculateMemory(),
+                            altProgressValue: calculateCache(),
                             frameSize: frameSize, name: "Mem", altName: "Swap")
                 
                 Spacer()
@@ -52,10 +52,16 @@ struct StatusServerRow: View {
         
     }
     
-    func calculateMemory(x: CGFloat?) -> CGFloat? {
-        guard let x = x,
-              let y = observableServerRowStatus.memoryTotal else { return nil }
-        return (x / y)
+    func calculateMemory() -> CGFloat? {
+        guard let x = observableServerRowStatus.serverStatistic.usedMemoryTotal,
+              let y = observableServerRowStatus.serverStatistic.memoryTotal else { return nil }
+        return ((x / y) * 100)
+    }
+    
+    func calculateCache() -> CGFloat? {
+        guard let x = observableServerRowStatus.serverStatistic.cachedMemoryTotal,
+              let y = observableServerRowStatus.serverStatistic.memoryTotal else { return nil }
+        return ((x / y) * 100)
     }
 }
 
@@ -105,8 +111,8 @@ private struct ServerRowHeader: View {
     }
     
     func calculateTemp() -> String {
-        guard let cpuTemp = observableStatusServerRow.cpuTemp else { return "" }
-        return "\(cpuTemp)°C"
+        guard let cpuTemp = observableStatusServerRow.serverStatistic.cpuTemp else { return "" }
+        return "\(Int(cpuTemp))°C"
     }
 }
 

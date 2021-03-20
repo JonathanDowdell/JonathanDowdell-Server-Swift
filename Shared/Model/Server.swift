@@ -12,6 +12,5 @@ struct Server: Codable, Hashable {
     var host: String
     var port: String
     var showing: Bool
-    var loadOn: TerminalCommand.LoadOn
     var authentication: Authentication
 }

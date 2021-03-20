@@ -15,10 +15,6 @@ struct ServerCreationView: View {
     
     @Binding var showingView: Bool
     
-    @State private var loadingOn = "server"
-    
-    let loadings = ["server", "device"]
-    
     var body: some View {
         NavigationView {
             Form {
@@ -73,14 +69,6 @@ struct ServerCreationView: View {
                     
                     Toggle("", isOn: $server.showing)
                         .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                }
-                
-                Section {
-                    Picker("Loading On", selection: $server.loadOn) {
-                        ForEach(loadings, id: \.self) {
-                            Text($0.capitalizingFirstLetter())
-                        }
-                    }
                 }
             }
             .listStyle(InsetGroupedListStyle())

@@ -45,6 +45,11 @@ struct ServerView: View {
                         ServerRow(server: $observedServers.servers[index])
                             .contextMenu(ContextMenu(menuItems: {
                                 Button(action: {
+                                    showingServerCreationView = true
+                                }, label: {
+                                    Text("Edit")
+                                })
+                                Button(action: {
                                     observedServers.remove(with: index)
                                 }, label: {
                                     Text("Remove")

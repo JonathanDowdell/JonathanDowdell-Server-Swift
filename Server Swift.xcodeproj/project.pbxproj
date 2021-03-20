@@ -14,8 +14,10 @@
 		24491E5225F2CB71005E96F8 /* ObservableServers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24491E5125F2CB71005E96F8 /* ObservableServers.swift */; };
 		24491E6625F2D062005E96F8 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24491E6525F2D062005E96F8 /* Authentication.swift */; };
 		244960E925FC543200F401BC /* PulsatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244960E825FC543200F401BC /* PulsatingView.swift */; };
-		2455806925F17AF500E3AAE4 /* NestedCircleStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455806825F17AF500E3AAE4 /* NestedCircleStat.swift */; };
-		2455806A25F17AF500E3AAE4 /* NestedCircleStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455806825F17AF500E3AAE4 /* NestedCircleStat.swift */; };
+		2455806925F17AF500E3AAE4 /* NestedUsageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */; };
+		2455806A25F17AF500E3AAE4 /* NestedUsageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */; };
+		2495306D260572E5006B5472 /* SectionedStatCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495306C260572E5006B5472 /* SectionedStatCircle.swift */; };
+		2495306E260572E5006B5472 /* SectionedStatCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495306C260572E5006B5472 /* SectionedStatCircle.swift */; };
 		249C296125F0530000E62F68 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C296025F0530000E62F68 /* Tests_iOS.swift */; };
 		249C296C25F0530000E62F68 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C296B25F0530000E62F68 /* Tests_macOS.swift */; };
 		249C296E25F0530000E62F68 /* Server_Swift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 249C294225F0530000E62F68 /* Server_Swift.xcdatamodeld */; };
@@ -36,8 +38,8 @@
 		249C29C025F0577900E62F68 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29BE25F0577900E62F68 /* ServerView.swift */; };
 		249C29C625F060E800E62F68 /* StatusServerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29C525F060E800E62F68 /* StatusServerRow.swift */; };
 		249C29C725F060E800E62F68 /* StatusServerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29C525F060E800E62F68 /* StatusServerRow.swift */; };
-		249C29CD25F062F200E62F68 /* CircleStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29CC25F062F200E62F68 /* CircleStat.swift */; };
-		249C29CE25F062F200E62F68 /* CircleStat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29CC25F062F200E62F68 /* CircleStat.swift */; };
+		249C29CD25F062F200E62F68 /* UsageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29CC25F062F200E62F68 /* UsageCircle.swift */; };
+		249C29CE25F062F200E62F68 /* UsageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29CC25F062F200E62F68 /* UsageCircle.swift */; };
 		249C29D825F0B55300E62F68 /* ReadWriteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29D725F0B55300E62F68 /* ReadWriteSection.swift */; };
 		249C29D925F0B55300E62F68 /* ReadWriteSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C29D725F0B55300E62F68 /* ReadWriteSection.swift */; };
 		24AABD6725F1292500CE0549 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24AABD6625F1292500CE0549 /* Theme.swift */; };
@@ -98,7 +100,8 @@
 		24491E5125F2CB71005E96F8 /* ObservableServers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServers.swift; sourceTree = "<group>"; };
 		24491E6525F2D062005E96F8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		244960E825FC543200F401BC /* PulsatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsatingView.swift; sourceTree = "<group>"; };
-		2455806825F17AF500E3AAE4 /* NestedCircleStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedCircleStat.swift; sourceTree = "<group>"; };
+		2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedUsageCircle.swift; sourceTree = "<group>"; };
+		2495306C260572E5006B5472 /* SectionedStatCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedStatCircle.swift; sourceTree = "<group>"; };
 		249C294325F0530000E62F68 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		249C294425F0530000E62F68 /* Server_SwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server_SwiftApp.swift; sourceTree = "<group>"; };
 		249C294625F0530000E62F68 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -119,7 +122,7 @@
 		249C29B325F0572800E62F68 /* PodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodView.swift; sourceTree = "<group>"; };
 		249C29BE25F0577900E62F68 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		249C29C525F060E800E62F68 /* StatusServerRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusServerRow.swift; sourceTree = "<group>"; };
-		249C29CC25F062F200E62F68 /* CircleStat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleStat.swift; sourceTree = "<group>"; };
+		249C29CC25F062F200E62F68 /* UsageCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageCircle.swift; sourceTree = "<group>"; };
 		249C29D725F0B55300E62F68 /* ReadWriteSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadWriteSection.swift; sourceTree = "<group>"; };
 		24AABD6625F1292500CE0549 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		24AABD7225F1361400CE0549 /* RobotoMono-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RobotoMono-Regular.ttf"; sourceTree = "<group>"; };
@@ -351,11 +354,12 @@
 			children = (
 				249C29A825F0565E00E62F68 /* StatusView.swift */,
 				249C29C525F060E800E62F68 /* StatusServerRow.swift */,
-				242797BB25FDC8E300674EF4 /* StatusServerDetailView.swift */,
 				24AABD8C25F14D3F00CE0549 /* StatSection.swift */,
 				249C29D725F0B55300E62F68 /* ReadWriteSection.swift */,
-				249C29CC25F062F200E62F68 /* CircleStat.swift */,
-				2455806825F17AF500E3AAE4 /* NestedCircleStat.swift */,
+				2495306C260572E5006B5472 /* SectionedStatCircle.swift */,
+				242797BB25FDC8E300674EF4 /* StatusServerDetailView.swift */,
+				249C29CC25F062F200E62F68 /* UsageCircle.swift */,
+				2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */,
 			);
 			path = Status;
 			sourceTree = "<group>";
@@ -599,8 +603,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2455806925F17AF500E3AAE4 /* NestedCircleStat.swift in Sources */,
+				2455806925F17AF500E3AAE4 /* NestedUsageCircle.swift in Sources */,
 				24491E4125F2C903005E96F8 /* StatusViewModel.swift in Sources */,
+				2495306D260572E5006B5472 /* SectionedStatCircle.swift in Sources */,
 				249C29B425F0572800E62F68 /* PodView.swift in Sources */,
 				249C29C625F060E800E62F68 /* StatusServerRow.swift in Sources */,
 				249C299A25F0553F00E62F68 /* RootTabView.swift in Sources */,
@@ -612,7 +617,7 @@
 				24B68DD825F2F98900BADED5 /* MockData.swift in Sources */,
 				24B68DD125F2F93900BADED5 /* ServerRow.swift in Sources */,
 				249C297025F0530000E62F68 /* Server_SwiftApp.swift in Sources */,
-				249C29CD25F062F200E62F68 /* CircleStat.swift in Sources */,
+				249C29CD25F062F200E62F68 /* UsageCircle.swift in Sources */,
 				249C29BF25F0577900E62F68 /* ServerView.swift in Sources */,
 				249C297425F0530000E62F68 /* Persistence.swift in Sources */,
 				244960E925FC543200F401BC /* PulsatingView.swift in Sources */,
@@ -635,7 +640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2455806A25F17AF500E3AAE4 /* NestedCircleStat.swift in Sources */,
+				2455806A25F17AF500E3AAE4 /* NestedUsageCircle.swift in Sources */,
 				24D0920425F6FFD400B5A49B /* ServerCreationView.swift in Sources */,
 				249C29B525F0572800E62F68 /* PodView.swift in Sources */,
 				24B68DED25F2FCA200BADED5 /* ServerSettingsView.swift in Sources */,
@@ -647,7 +652,8 @@
 				24AABD6825F1292500CE0549 /* Theme.swift in Sources */,
 				24AABD8E25F14D3F00CE0549 /* StatSection.swift in Sources */,
 				249C297125F0530000E62F68 /* Server_SwiftApp.swift in Sources */,
-				249C29CE25F062F200E62F68 /* CircleStat.swift in Sources */,
+				2495306E260572E5006B5472 /* SectionedStatCircle.swift in Sources */,
+				249C29CE25F062F200E62F68 /* UsageCircle.swift in Sources */,
 				249C29C025F0577900E62F68 /* ServerView.swift in Sources */,
 				249C297525F0530000E62F68 /* Persistence.swift in Sources */,
 				249C296F25F0530000E62F68 /* Server_Swift.xcdatamodeld in Sources */,

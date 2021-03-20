@@ -9,11 +9,11 @@ import SwiftUI
 
 struct StatSection: View {
     
+    @State var flipped = false
+    
     var progressValue: CGFloat?
     
     var altProgressValue: CGFloat?
-    
-    @State var flipped = false
     
     let frameSize: CGFloat
     
@@ -58,10 +58,10 @@ struct StatSection: View {
             VStack {
                 
                 if processType == .CPU {
-                    CircleStat(progressValue: progressValue, altProgressValue: altProgressValue)
+                    UsageCircle(progressValue: progressValue, altProgressValue: altProgressValue)
                         .frame(width: frameSize, height: frameSize, alignment: .center)
                 } else {
-                    NestedCircleStat(progressValue: progressValue)
+                    NestedUsageCircle(progressValue: progressValue)
                         .frame(width: frameSize, height: frameSize, alignment: .center)
                 }
                 
