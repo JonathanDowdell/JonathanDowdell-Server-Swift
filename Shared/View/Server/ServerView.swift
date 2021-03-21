@@ -14,6 +14,10 @@ struct ServerView: View {
     
     @State private var showingServerCreationView = false
     
+    @State private var showingServerEditView = false
+    
+    @State private var editingServer: Server = MockData.servers[2]
+    
     var body: some View {
         NavigationView {
             List {
@@ -42,10 +46,14 @@ struct ServerView: View {
                 
                 Section(header: Text("SERVERS").font(.caption)) {
                     ForEach(observedServers.servers.filter{ $0.showing }.indices, id: \.self) { index in
-                        ServerRow(server: $observedServers.servers[index])
+                        ServerRow(server: observedServers.servers[index])
+                            .sheet(isPresented: $showingServerEditView, content: {
+                                ServerCreationView(server: $observedServers.servers[index], showingView: $showingServerEditView)
+                            })
                             .contextMenu(ContextMenu(menuItems: {
                                 Button(action: {
-                                    showingServerCreationView = true
+                                    showingServerEditView = true
+                                    print(observedServers.servers[index])
                                 }, label: {
                                     Text("Edit")
                                 })
@@ -64,7 +72,7 @@ struct ServerView: View {
                 Text("Add")
             }))
             .sheet(isPresented: $showingServerCreationView) {
-                ServerCreationView(showingView: $showingServerCreationView)
+                ServerCreationView(server: $editingServer, showingView: $showingServerCreationView)
             }
         }
     }
@@ -75,3 +83,4 @@ struct ServerView_Previews: PreviewProvider {
         ServerView()
     }
 }
+

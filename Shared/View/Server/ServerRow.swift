@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ServerRow: View {
     
-    @Binding var server: Server
+    var server: Server
     
     var body: some View {
         HStack {
@@ -36,10 +36,10 @@ struct ServerRow: View {
 struct ServerRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ServerRow(server: .constant(MockData.servers[0]))
+            ServerRow(server: MockData.servers[0])
                 .preferredColorScheme(.light)
             
-            ServerRow(server: .constant(MockData.servers[0]))
+            ServerRow(server: MockData.servers[0])
                 .preferredColorScheme(.dark)
         }
     }

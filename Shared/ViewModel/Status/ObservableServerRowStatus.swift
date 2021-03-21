@@ -64,8 +64,8 @@ class ObservableServerRowStatus: ObservableObject {
             command.connect()
                 .authenticate(self.authenticationChallenge)
                 .execute(self.terminalCommands()) { [weak self] (resultedCommand, data: String?, error) in
-                    if let error = error {
-                        print(error)
+                    if let _ = error {
+//                        print(error)
                     }
                     
                     guard let data = data else { return }

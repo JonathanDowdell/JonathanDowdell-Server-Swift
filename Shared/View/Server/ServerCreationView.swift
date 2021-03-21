@@ -11,7 +11,7 @@ struct ServerCreationView: View {
     
     @EnvironmentObject var observableServers: ObservableServers
     
-    @State var server = MockData.servers[2]
+    @Binding var server: Server
     
     @Binding var showingView: Bool
     
@@ -79,27 +79,33 @@ struct ServerCreationView: View {
             }, label: {
                 Text("Cancel")
                     .bold()
-            }), trailing: Button(action: {
-                let _ = observableServers.save(server: server)
-                showingView = false
-            }, label: {
+            }), trailing: Button(action: save, label: {
                 Text("Save")
                     .bold()
             }))
         }
     }
     
+    private func save() {
+        if server.id.isEmpty {
+            server.id = UUID().uuidString
+            let _ = observableServers.save(server: server)
+            showingView = false
+        } else {
+            let _ = observableServers.update(server: server)
+            showingView = false
+        }
+    }
 }
 
 struct ServerCreationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            
-            ServerCreationView(showingView: .constant(true))
+            ServerCreationView(server: .constant(MockData.servers[1]), showingView: .constant(true))
                 .preferredColorScheme(.light)
             
             
-            ServerCreationView(showingView: .constant(true))
+            ServerCreationView(server: .constant(MockData.servers[1]), showingView: .constant(true))
                 .preferredColorScheme(.dark)
             
         }

@@ -8,9 +8,11 @@
 import Foundation
 
 struct Server: Codable, Hashable {
+    var id: String = UUID().uuidString
     var name: String
     var host: String
     var port: String
     var showing: Bool
     var authentication: Authentication
+    var createdDate: Date
 }

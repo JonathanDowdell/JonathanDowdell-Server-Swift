@@ -19,7 +19,7 @@ struct StatusView: View {
                     ForEach(observedServers
                                 .servers
                                 .filter{ $0.showing }
-                                .sorted{ $0.name > $1.name },
+                                .sorted{ $0.createdDate < $1.createdDate },
                             id: \.self) { server in
                         StatusServerRow(observableServerRowStatus: ObservableServerRowStatus(with: server))
                     }

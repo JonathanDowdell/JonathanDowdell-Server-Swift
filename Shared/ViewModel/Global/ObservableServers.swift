@@ -30,7 +30,7 @@ class ObservableServers: ObservableObject {
     }
     
     func save(server: Server) -> Bool {
-        let key = "\(server.name + server.host + server.authentication.user)\(server.port)"
+        let key = server.id
         if let rawServerData = try? encoder.encode(server) {
             servers.append(server)
             return KeychainWrapper.standard.set(rawServerData, forKey: key)
@@ -38,17 +38,25 @@ class ObservableServers: ObservableObject {
         return false
     }
     
+    func update(server: Server) -> Bool {
+        let key = server.id
+        if let rawServerData = try? encoder.encode(server) {
+            return KeychainWrapper.standard.set(rawServerData, forKey: key)
+        }
+        return false
+    }
+    
     func remove(with index: Int) {
         let server = servers[index]
-        let key = "\(server.name + server.host + server.authentication.user)\(server.port)"
-        servers.remove(at: index)
+        let key = server.id
         KeychainWrapper.standard.remove(forKey: KeychainWrapper.Key(rawValue: key))
+        servers.remove(at: index)
     }
     
     func remove(server: Server) {
         guard let index = servers.firstIndex(of: server) else { return }
-        let key = "\(server.name + server.host + server.authentication.user)\(server.port)"
-        servers.remove(at: index)
+        let key = servers[index].id
         KeychainWrapper.standard.remove(forKey: KeychainWrapper.Key(rawValue: key))
+        servers.remove(at: index)
     }
 }
