@@ -11,42 +11,70 @@ struct ServerCreationView: View {
     
     @EnvironmentObject var observableServers: ObservableServers
     
-    @Binding var server: Server
+    private(set) var server: Binding<Server>?
     
-    @Binding var showingView: Bool
+    @Binding private(set) var showingView: Bool
+    
+    @State private(set) var name: String = ""
+    
+    @State private(set) var host: String = ""
+    
+    @State private(set) var port: String = ""
+    
+    @State private(set) var user: String = ""
+    
+    @State private(set) var password: String = ""
+    
+    @State private(set) var showing: Bool = true
+    
+    init(server: Binding<Server>, showingView: Binding<Bool>) {
+        self.server = server
+        self._showingView = showingView
+        self._name = State(initialValue: server.name.wrappedValue)
+        self._host = State(initialValue: server.host.wrappedValue)
+        self._port = State(initialValue: server.port.wrappedValue)
+        self._user = State(initialValue: server.authentication.user.wrappedValue)
+        self._password = State(initialValue: server.authentication.password.wrappedValue)
+        self._showing = State(initialValue: server.showing.wrappedValue)
+    }
+    
+    init(showingView: Binding<Bool>) {
+        self._showingView = showingView
+    }
+    
     
     var body: some View {
         NavigationView {
             Form {
                 HStack {
                     Text("Name")
-                    TextField("Display Name", text: $server.name)
+                    TextField("Display Name", text: $name)
                         .multilineTextAlignment(.trailing)
                 }
                 
                 HStack {
                     Text("Host")
-                    TextField("IP or Domain", text: $server.host)
+                    TextField("IP or Domain", text: $host)
                         .multilineTextAlignment(.trailing)
                 }
                 
                 HStack {
                     Text("Port")
-                    TextField("Default 22", text: $server.port)
+                    TextField("Default 22", text: $port)
                         .multilineTextAlignment(.trailing)
                 }
                 
                 Section(header: Text("AUTHENTICATION")) {
                     HStack {
                         Text("User")
-                        TextField("Username", text: $server.authentication.user)
+                        TextField("Username", text: $user)
                             .autocapitalization(.none)
                             .multilineTextAlignment(.trailing)
                     }
                     
                     HStack {
                         Text("Password")
-                        SecureField("Password", text: $server.authentication.password)
+                        SecureField("Password", text: $password)
                             .multilineTextAlignment(.trailing)
                     }
                 }
@@ -67,7 +95,7 @@ struct ServerCreationView: View {
                 HStack {
                     Text("Show in Status")
                     
-                    Toggle("", isOn: $server.showing)
+                    Toggle("", isOn: $showing)
                         .toggleStyle(SwitchToggleStyle(tint: .accentColor))
                 }
             }
@@ -87,12 +115,20 @@ struct ServerCreationView: View {
     }
     
     private func save() {
-        if server.id.isEmpty {
-            server.id = UUID().uuidString
+        if server == nil {
+            let auth = Authentication(user: user, password: password, rsa: nil)
+            let server = Server(name: name, host: host, port: port, showing: showing, authentication: auth, createdDate: Date())
             let _ = observableServers.save(server: server)
             showingView = false
         } else {
-            let _ = observableServers.update(server: server)
+            guard let existingServer = server else { return }
+            existingServer.name.wrappedValue = name
+            existingServer.host.wrappedValue = host
+            existingServer.port.wrappedValue = port
+            existingServer.authentication.user.wrappedValue = user
+            existingServer.authentication.password.wrappedValue = password
+            existingServer.showing.wrappedValue = showing
+            let _ = observableServers.update(server: existingServer.wrappedValue)
             showingView = false
         }
     }
@@ -115,10 +151,11 @@ struct ServerCreationView_Previews: PreviewProvider {
 
 extension String {
     func capitalizingFirstLetter() -> String {
-      return prefix(1).uppercased() + self.lowercased().dropFirst()
+        return prefix(1).uppercased() + self.lowercased().dropFirst()
     }
-
+    
     mutating func capitalizeFirstLetter() {
-      self = self.capitalizingFirstLetter()
+        self = self.capitalizingFirstLetter()
     }
 }
+

@@ -10,8 +10,6 @@ import SwiftUI
 
 struct ReadWriteSection: View {
     
-    let frameSize: CGFloat
-    
     let name: String
     
     let upSpeed = Int.random(in: 0...999)
@@ -19,6 +17,8 @@ struct ReadWriteSection: View {
     let downSpeed = Int.random(in: 0...999)
     
     @State var flipped = false
+    
+    var frameSize: CGFloat = 50
     
     var body: some View {
         

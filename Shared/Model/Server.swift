@@ -15,4 +15,9 @@ struct Server: Codable, Hashable {
     var showing: Bool
     var authentication: Authentication
     var createdDate: Date
+    
+    
+    func copy() -> Server {
+        return self
+    }
 }

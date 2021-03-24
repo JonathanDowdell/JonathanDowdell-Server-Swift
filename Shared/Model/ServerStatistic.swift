@@ -18,7 +18,6 @@ struct ServerStatistic {
     var idleUsage: CGFloat?
     var ioWaitUsage: CGFloat?
     var stealUsage: CGFloat?
-    var cpuLoad: [Double?] = [Double?]()
     var coreCount: Int16?
     var memoryTotal: CGFloat?
     var freeMemoryTotal: CGFloat?
@@ -26,6 +25,9 @@ struct ServerStatistic {
     var cachedMemoryTotal: CGFloat?
     var osName: String?
     var osVersion: String?
+    var loadAvg1Min: CGFloat?
+    var loadAvg5Min: CGFloat?
+    var loadAvg15Min: CGFloat?
 }
 
 extension ServerStatistic {
@@ -38,8 +40,18 @@ extension ServerStatistic {
                 let cpuLoadComponents = item.replacingOccurrences(of: ",", with: " ").components(separatedBy: " ")
                 
                 // CPU Load
-                self.cpuLoad = (search(for: "average", in: cpuLoadComponents) as [String])
-                    .map({$0.doubleValue})
+                let loadAvgs:[CGFloat] = search(for: "average", in: cpuLoadComponents)
+                for (index, item) in loadAvgs.enumerated() {
+                    switch index {
+                    case 0:
+                        loadAvg1Min = item
+                    case 1:
+                        loadAvg5Min = item
+                    case 2:
+                        loadAvg15Min = item
+                    default:break
+                    }
+                }
                 
                 // CPU Uptime
                 self.uptime = Int(cpuLoadComponents[4])
@@ -142,12 +154,12 @@ extension ServerStatistic {
         return array[targetIndex]
     }
     
-    private func search(for field: String, in array: [String]) -> [String] {
+    private func search(for field: String, in array: [String]) -> [CGFloat] {
         guard !array.isEmpty else {
-            return [String]()
+            return [CGFloat]()
         }
         
-        var returnArray = [String]()
+        var returnArray = [CGFloat]()
         
         let enumeratableArray = array.enumerated()
         
@@ -156,10 +168,8 @@ extension ServerStatistic {
             if filteredElement == field {
                 for j in ((i + 1)..<array.count) {
                     let item = array[j].trimmingCharacters(in: .punctuationCharacters)
-                    if item.doubleValue != nil {
-                        returnArray.append(item)
-                    } else {
-                        break
+                    if let value = item.doubleValue {
+                        returnArray.append(CGFloat(value))
                     }
                 }
             }

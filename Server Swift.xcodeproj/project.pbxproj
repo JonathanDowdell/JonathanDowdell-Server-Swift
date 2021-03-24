@@ -68,6 +68,7 @@
 		24C8E44F25F53AF100DDE319 /* TerminalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C8E44E25F53AF100DDE319 /* TerminalCommand.swift */; };
 		24D0920325F6FFD400B5A49B /* ServerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0920225F6FFD400B5A49B /* ServerCreationView.swift */; };
 		24D0920425F6FFD400B5A49B /* ServerCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D0920225F6FFD400B5A49B /* ServerCreationView.swift */; };
+		24D4B830260AC9CC00220E7D /* Optional+Alt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D4B82F260AC9CC00220E7D /* Optional+Alt.swift */; };
 		24D90CFF25F3108000E7AC73 /* ObservableServerRowStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D90CFE25F3108000E7AC73 /* ObservableServerRowStatus.swift */; };
 		4A86880819C8C432461DB776 /* Pods_Server_Swift__macOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E35D60616A9F28E3437EC0E /* Pods_Server_Swift__macOS_.framework */; };
 		90D3CC13A1B330D72540E17E /* Pods_Server_Swift__iOS_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14329BC31996C05A62DD4642 /* Pods_Server_Swift__iOS_.framework */; };
@@ -136,6 +137,7 @@
 		24C2EA142601527C00C9BF51 /* CGFloat+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+String.swift"; sourceTree = "<group>"; };
 		24C8E44E25F53AF100DDE319 /* TerminalCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalCommand.swift; sourceTree = "<group>"; };
 		24D0920225F6FFD400B5A49B /* ServerCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerCreationView.swift; sourceTree = "<group>"; };
+		24D4B82F260AC9CC00220E7D /* Optional+Alt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+Alt.swift"; sourceTree = "<group>"; };
 		24D90CFE25F3108000E7AC73 /* ObservableServerRowStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableServerRowStatus.swift; sourceTree = "<group>"; };
 		84A4684C214808C1E5B15890 /* Pods-Server Swift (iOS).debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Server Swift (iOS).debug.xcconfig"; path = "Target Support Files/Pods-Server Swift (iOS)/Pods-Server Swift (iOS).debug.xcconfig"; sourceTree = "<group>"; };
 		A1A09710F683B086167BF9EC /* Pods-Server Swift (iOS).release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Server Swift (iOS).release.xcconfig"; path = "Target Support Files/Pods-Server Swift (iOS)/Pods-Server Swift (iOS).release.xcconfig"; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				24AABD6625F1292500CE0549 /* Theme.swift */,
 				24AABD9625F15F0C00CE0549 /* Vibration.swift */,
 				24C2EA142601527C00C9BF51 /* CGFloat+String.swift */,
+				24D4B82F260AC9CC00220E7D /* Optional+Alt.swift */,
 				249C294725F0530000E62F68 /* Assets.xcassets */,
 				249C294225F0530000E62F68 /* Server_Swift.xcdatamodeld */,
 				24AABD7125F135FD00CE0549 /* Resources */,
@@ -612,6 +615,7 @@
 				249C29D825F0B55300E62F68 /* ReadWriteSection.swift in Sources */,
 				24AABD6725F1292500CE0549 /* Theme.swift in Sources */,
 				24AABD8D25F14D3F00CE0549 /* StatSection.swift in Sources */,
+				24D4B830260AC9CC00220E7D /* Optional+Alt.swift in Sources */,
 				24491E5225F2CB71005E96F8 /* ObservableServers.swift in Sources */,
 				24B68DEC25F2FCA200BADED5 /* ServerSettingsView.swift in Sources */,
 				24B68DD825F2F98900BADED5 /* MockData.swift in Sources */,

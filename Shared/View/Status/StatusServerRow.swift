@@ -14,30 +14,31 @@ struct StatusServerRow: View {
     
     var body: some View {
         
-        let frameSize: CGFloat = 50
-        
         VStack(alignment: .leading, spacing: 40) {
             ServerRowHeader(observableStatusServerRow: observableServerRowStatus)
             
             HStack(alignment: .center) {
                 
                 StatSection(progressValue: observableServerRowStatus.serverStatistic.cpuUsage,
-                            frameSize: frameSize, name: "CPU", altName: "Load")
+                            altInnerRadius: observableServerRowStatus.serverStatistic.loadAvg1Min,
+                            altMiddleRadius: observableServerRowStatus.serverStatistic.loadAvg5Min,
+                            altOuterRadius: observableServerRowStatus.serverStatistic.loadAvg15Min,
+                            frontName: "CPU", backName: "Load")
                     .padding(.leading, 4)
                 
                 Spacer()
                 
                 StatSection(progressValue: calculateMemory(),
                             altProgressValue: calculateCache(),
-                            frameSize: frameSize, name: "Mem", altName: "Swap")
+                            frontName: "Mem", backName: "Swap")
                 
                 Spacer()
                 
-                ReadWriteSection(frameSize: frameSize, name: "Traffic")
+                ReadWriteSection(name: "Traffic")
                 
                 Spacer()
                 
-                ReadWriteSection(frameSize: frameSize, name: "Disk")
+                ReadWriteSection(name: "Disk")
                 
             }
             .padding(.horizontal, 4)
@@ -123,7 +124,7 @@ extension View {
         return rotation3DEffect(Angle(degrees: degrees), axis: (x: 0.0, y: 1.0, z: 0.0))
     }
     
-    func placedOnCard(_ color: Color, frameSize: CGFloat) -> some View {
+    func placedOnCard(_ color: Color, frameSize: CGFloat = 50.0) -> some View {
         return padding(5).frame(width: frameSize, height: frameSize, alignment: .center).background(color)
     }
 }

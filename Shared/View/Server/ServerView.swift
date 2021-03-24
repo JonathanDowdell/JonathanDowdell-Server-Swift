@@ -72,7 +72,7 @@ struct ServerView: View {
                 Text("Add")
             }))
             .sheet(isPresented: $showingServerCreationView) {
-                ServerCreationView(server: $editingServer, showingView: $showingServerCreationView)
+                ServerCreationView(showingView: $showingServerCreationView)
             }
         }
     }
