@@ -15,4 +15,8 @@ extension Color {
     static var dynamicDark: Color {
         return Color("dynamicDark")
     }
+    
+    static var dynamicOpaqueGrey: Color {
+        return Color("dynamicOpaqueGrey")
+    }
 }

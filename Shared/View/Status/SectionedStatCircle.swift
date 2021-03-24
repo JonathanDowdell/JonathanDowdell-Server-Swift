@@ -17,7 +17,7 @@ struct SectionedStatCircle: View {
             Circle()
                 .trim(from: mainUsage + 0.06, to: min(1, 1))
                 .stroke(style: StrokeStyle(lineWidth: 8, lineCap: .square, lineJoin: .miter))
-                .foregroundColor(Color(.sRGB, red: 28/255, green: 27/255, blue: 29/255, opacity: 1))
+                .foregroundColor(Color.dynamicOpaqueGrey)
                 .rotationEffect(Angle(degrees: 180 * 2.5))
                 .animation(.spring())
             
@@ -33,8 +33,14 @@ struct SectionedStatCircle: View {
 
 struct SectionedStatCircle_Previews: PreviewProvider {
     static var previews: some View {
-        SectionedStatCircle()
-            .frame(width: 50, height: 50, alignment: .center)
-            .preferredColorScheme(.dark)
+        Group {
+            SectionedStatCircle()
+                .frame(width: 50, height: 50, alignment: .center)
+                .preferredColorScheme(.dark)
+            
+            SectionedStatCircle()
+                .frame(width: 50, height: 50, alignment: .center)
+                .preferredColorScheme(.light)
+        }
     }
 }

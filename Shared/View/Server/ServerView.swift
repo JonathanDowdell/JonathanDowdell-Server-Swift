@@ -16,8 +16,6 @@ struct ServerView: View {
     
     @State private var showingServerEditView = false
     
-    @State private var editingServer: Server = MockData.servers[2]
-    
     var body: some View {
         NavigationView {
             List {
@@ -45,25 +43,47 @@ struct ServerView: View {
                     })
                 
                 Section(header: Text("SERVERS").font(.caption)) {
-                    ForEach(observedServers.servers.filter{ $0.showing }.indices, id: \.self) { index in
-                        ServerRow(server: observedServers.servers[index])
+                    ForEach(observedServers.servers, id: \.self) { server in
+                        ServerRow(server: server)
+                            .onTapGesture {
+                                print(server.name)
+                            }
                             .sheet(isPresented: $showingServerEditView, content: {
-                                ServerCreationView(server: $observedServers.servers[index], showingView: $showingServerEditView)
+                                ServerCreationView(server: observedServers.editingServer!, showingView: $showingServerEditView)
                             })
                             .contextMenu(ContextMenu(menuItems: {
                                 Button(action: {
+                                    observedServers.editingServer = server
                                     showingServerEditView = true
-                                    print(observedServers.servers[index])
                                 }, label: {
                                     Text("Edit")
                                 })
                                 Button(action: {
-                                    observedServers.remove(with: index)
+                                    observedServers.remove(server: server)
                                 }, label: {
                                     Text("Remove")
                                 })
                             }))
                     }
+//                    ForEach(observedServers.servers.filter{ $0.showing }.indices, id: \.self) { index in
+//                        ServerRow(server: observedServers.servers[index])
+//                            .sheet(isPresented: $showingServerEditView, content: {
+//                                ServerCreationView(server: $observedServers.servers[index], showingView: $showingServerEditView)
+//                            })
+//                            .contextMenu(ContextMenu(menuItems: {
+//                                Button(action: {
+//                                    showingServerEditView = true
+//                                    print(observedServers.servers[index])
+//                                }, label: {
+//                                    Text("Edit")
+//                                })
+//                                Button(action: {
+//                                    observedServers.remove(with: index)
+//                                }, label: {
+//                                    Text("Remove")
+//                                })
+//                            }))
+//                    }
                 }
             }
             .listStyle(InsetListStyle())

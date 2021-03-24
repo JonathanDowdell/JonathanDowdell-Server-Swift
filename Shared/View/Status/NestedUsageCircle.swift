@@ -41,7 +41,7 @@ struct NestedUsageCircle: View {
             ZStack {
                 Circle()
                     .stroke(style: StrokeStyle(lineWidth: 8, lineCap: .round, lineJoin: .round))
-                    .foregroundColor(Color(.sRGB, red: 28/255, green: 27/255, blue: 29/255, opacity: 1))
+                    .foregroundColor(Color.dynamicOpaqueGrey)
                     .rotationEffect(Angle(degrees: 180 * 2.5))
                 
                 Circle()

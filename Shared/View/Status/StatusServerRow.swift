@@ -73,6 +73,10 @@ struct StatusServerRow_Previews: PreviewProvider {
             StatusServerRow(observableServerRowStatus: ObservableServerRowStatus(with: MockData.servers[0]))
                 .preferredColorScheme(.dark)
                 .frame(height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            
+            StatusServerRow(observableServerRowStatus: ObservableServerRowStatus(with: MockData.servers[0]))
+                .preferredColorScheme(.light)
+                .frame(height: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
         }
     }
 }
@@ -87,7 +91,7 @@ private struct ServerRowHeader: View {
                 destination: StatusServerDetailView(observableServerRowStatus: observableStatusServerRow),
                 label: {
                     Text(observableStatusServerRow.server.name)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                         .font(.system(.headline, design: .rounded))
                     Image(systemName: "bolt.horizontal.fill")
                         .foregroundColor(observableStatusServerRow.serverLoaded ? .accentColor : .gray)

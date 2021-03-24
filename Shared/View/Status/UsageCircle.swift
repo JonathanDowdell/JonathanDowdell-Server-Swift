@@ -19,7 +19,7 @@ struct UsageCircle: View {
             ZStack {
                 Circle()
                     .stroke(lineWidth: 10)
-                    .fill(Color(.sRGB, red: 28/255, green: 27/255, blue: 29/255, opacity: 1))
+                    .fill(Color.dynamicOpaqueGrey)
                 
                 Circle()
                     .trim(from: 0, to: min(calculateUsage(altProgressValue), 1))

@@ -11,7 +11,9 @@ struct ServerCreationView: View {
     
     @EnvironmentObject var observableServers: ObservableServers
     
-    private(set) var server: Binding<Server>?
+//    private(set) var server: Binding<Server>?
+    
+    private(set) var server: Server?
     
     @Binding private(set) var showingView: Bool
     
@@ -27,15 +29,27 @@ struct ServerCreationView: View {
     
     @State private(set) var showing: Bool = true
     
-    init(server: Binding<Server>, showingView: Binding<Bool>) {
+//    init(server: Binding<Server>, showingView: Binding<Bool>) {
+//        self.server = server
+//        self._showingView = showingView
+//        self._name = State(initialValue: server.name.wrappedValue)
+//        self._host = State(initialValue: server.host.wrappedValue)
+//        self._port = State(initialValue: server.port.wrappedValue)
+//        self._user = State(initialValue: server.authentication.user.wrappedValue)
+//        self._password = State(initialValue: server.authentication.password.wrappedValue)
+//        self._showing = State(initialValue: server.showing.wrappedValue)
+//    }
+    
+    init(server: Server, showingView: Binding<Bool>) {
         self.server = server
+        print(server.name)
         self._showingView = showingView
-        self._name = State(initialValue: server.name.wrappedValue)
-        self._host = State(initialValue: server.host.wrappedValue)
-        self._port = State(initialValue: server.port.wrappedValue)
-        self._user = State(initialValue: server.authentication.user.wrappedValue)
-        self._password = State(initialValue: server.authentication.password.wrappedValue)
-        self._showing = State(initialValue: server.showing.wrappedValue)
+        self._name = State(initialValue: server.name)
+        self._host = State(initialValue: server.host)
+        self._port = State(initialValue: server.port)
+        self._user = State(initialValue: server.authentication.user)
+        self._password = State(initialValue: server.authentication.password)
+        self._showing = State(initialValue: showing)
     }
     
     init(showingView: Binding<Bool>) {
@@ -121,15 +135,25 @@ struct ServerCreationView: View {
             let _ = observableServers.save(server: server)
             showingView = false
         } else {
-            guard let existingServer = server else { return }
-            existingServer.name.wrappedValue = name
-            existingServer.host.wrappedValue = host
-            existingServer.port.wrappedValue = port
-            existingServer.authentication.user.wrappedValue = user
-            existingServer.authentication.password.wrappedValue = password
-            existingServer.showing.wrappedValue = showing
-            let _ = observableServers.update(server: existingServer.wrappedValue)
+            guard var editingServer = server else { return }
+            editingServer.name = name
+            editingServer.host = host
+            editingServer.port = port
+            editingServer.authentication.user = user
+            editingServer.authentication.password = password
+            editingServer.showing = showing
+            print(editingServer)
+            let _ = observableServers.update(server: editingServer)
             showingView = false
+//            guard let existingServer = server else { return }
+//            existingServer.name.wrappedValue = name
+//            existingServer.host.wrappedValue = host
+//            existingServer.port.wrappedValue = port
+//            existingServer.authentication.user.wrappedValue = user
+//            existingServer.authentication.password.wrappedValue = password
+//            existingServer.showing.wrappedValue = showing
+//            let _ = observableServers.update(server: existingServer.wrappedValue)
+//            showingView = false
         }
     }
 }
@@ -137,11 +161,11 @@ struct ServerCreationView: View {
 struct ServerCreationView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ServerCreationView(server: .constant(MockData.servers[1]), showingView: .constant(true))
+            ServerCreationView(server: MockData.servers[1], showingView: .constant(true))
                 .preferredColorScheme(.light)
             
             
-            ServerCreationView(server: .constant(MockData.servers[1]), showingView: .constant(true))
+            ServerCreationView(server: MockData.servers[1], showingView: .constant(true))
                 .preferredColorScheme(.dark)
             
         }
