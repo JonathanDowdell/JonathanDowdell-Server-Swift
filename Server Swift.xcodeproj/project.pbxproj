@@ -16,6 +16,7 @@
 		244960E925FC543200F401BC /* PulsatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244960E825FC543200F401BC /* PulsatingView.swift */; };
 		2455806925F17AF500E3AAE4 /* NestedUsageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */; };
 		2455806A25F17AF500E3AAE4 /* NestedUsageCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */; };
+		247889D1260BDAAB00699101 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247889D0260BDAAB00699101 /* ScrollView.swift */; };
 		2495306D260572E5006B5472 /* SectionedStatCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495306C260572E5006B5472 /* SectionedStatCircle.swift */; };
 		2495306E260572E5006B5472 /* SectionedStatCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2495306C260572E5006B5472 /* SectionedStatCircle.swift */; };
 		249C296125F0530000E62F68 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249C296025F0530000E62F68 /* Tests_iOS.swift */; };
@@ -102,6 +103,7 @@
 		24491E6525F2D062005E96F8 /* Authentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
 		244960E825FC543200F401BC /* PulsatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulsatingView.swift; sourceTree = "<group>"; };
 		2455806825F17AF500E3AAE4 /* NestedUsageCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NestedUsageCircle.swift; sourceTree = "<group>"; };
+		247889D0260BDAAB00699101 /* ScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollView.swift; sourceTree = "<group>"; };
 		2495306C260572E5006B5472 /* SectionedStatCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionedStatCircle.swift; sourceTree = "<group>"; };
 		249C294325F0530000E62F68 /* Shared.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Shared.xcdatamodel; sourceTree = "<group>"; };
 		249C294425F0530000E62F68 /* Server_SwiftApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Server_SwiftApp.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				24AABD9625F15F0C00CE0549 /* Vibration.swift */,
 				24C2EA142601527C00C9BF51 /* CGFloat+String.swift */,
 				24D4B82F260AC9CC00220E7D /* Optional+Alt.swift */,
+				247889D0260BDAAB00699101 /* ScrollView.swift */,
 				249C294725F0530000E62F68 /* Assets.xcassets */,
 				249C294225F0530000E62F68 /* Server_Swift.xcdatamodeld */,
 				24AABD7125F135FD00CE0549 /* Resources */,
@@ -625,6 +628,7 @@
 				249C29BF25F0577900E62F68 /* ServerView.swift in Sources */,
 				249C297425F0530000E62F68 /* Persistence.swift in Sources */,
 				244960E925FC543200F401BC /* PulsatingView.swift in Sources */,
+				247889D1260BDAAB00699101 /* ScrollView.swift in Sources */,
 				24C8E44F25F53AF100DDE319 /* TerminalCommand.swift in Sources */,
 				24C2E9FC26011ADF00C9BF51 /* TemperatureScale.swift in Sources */,
 				24C2EA0B26014D3200C9BF51 /* ServerStatistic.swift in Sources */,

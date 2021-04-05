@@ -85,17 +85,23 @@ private struct ServerRowHeader: View {
     
     @ObservedObject private(set) var observableStatusServerRow: ObservableServerRowStatus
     
+    @State private var shouldPush = false
+    
     var body: some View {
         HStack(spacing: 15) {
             NavigationLink(
-                destination: StatusServerDetailView(observableServerRowStatus: observableStatusServerRow),
-                label: {
+                destination: StatusServerDetailView(observableServerRowStatus: observableStatusServerRow), isActive: $shouldPush) {
+                Button(action: {
+                    observableStatusServerRow.canStopTimer = false
+                    shouldPush.toggle()
+                }, label: {
                     Text(observableStatusServerRow.server.name)
                         .foregroundColor(.primary)
                         .font(.system(.headline, design: .rounded))
                     Image(systemName: "bolt.horizontal.fill")
                         .foregroundColor(observableStatusServerRow.serverLoaded ? .accentColor : .gray)
                 })
+            }
             
             Spacer()
             

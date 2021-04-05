@@ -102,13 +102,13 @@ extension ServerStatistic {
             
             // OS Info
             if item.contains("NAME=") {
-                let osInfoComponents = item.replacingOccurrences(of: ",", with: " ").components(separatedBy: " ")
-                
                 // OS Name
-                self.osName = osInfoComponents.first?.components(separatedBy: "\"").dropFirst().first
-                
+                self.osName = item.replacingOccurrences(of: "NAME=", with: "").replacingOccurrences(of: "\"", with: "")
+            }
+            
+            if item.contains("VERSION=") {
                 // OS Version
-                self.osVersion = osInfoComponents.last?.components(separatedBy: "\"").dropFirst().first
+                self.osVersion = item.replacingOccurrences(of: "VERSION=", with: "").replacingOccurrences(of: "\"", with: "")
             }
             
             // Core Count

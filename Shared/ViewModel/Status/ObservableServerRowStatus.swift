@@ -26,11 +26,21 @@ class ObservableServerRowStatus: ObservableObject {
     
     private let timer = Timer.publish(every: 2.5, on: .main, in: .common).autoconnect()
     
+    private let timer1 = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    
     private var timerSubscription: Cancellable?
+    
+    private var timerSubscription2: Cancellable?
+    
+    var canStopTimer = true
     
     init(with server: Server) {
         self.server = server
         connect()
+        
+        timerSubscription2 = timer1.sink(receiveValue: { (_) in
+            self.serverLoaded.toggle()
+        })
     }
     
     deinit {
@@ -44,7 +54,9 @@ class ObservableServerRowStatus: ObservableObject {
     }
     
     func stopTimer() {
-        timerSubscription = nil
+        if canStopTimer {
+            timerSubscription = nil
+        }
     }
     
     func connect() {
@@ -83,7 +95,7 @@ class ObservableServerRowStatus: ObservableObject {
         guard let stats = ServerStatistic(data: data) else { return }
         withAnimation {
             self.serverStatistic = stats
-            self.serverLoaded = true
+//            self.serverLoaded = true
         }
     }
     
